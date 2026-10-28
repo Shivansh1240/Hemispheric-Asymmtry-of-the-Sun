@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+
+# pipeline run logs and staging
+pipeline/logs/
+pipeline/stage_type42/
+
+# dynamo build and runs (init.dat is the only input)
+dynamo/surya
+dynamo/run*/
+dynamo/*.dat
+!dynamo/init.dat
+dynamo/series_b
