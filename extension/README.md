@@ -14,7 +14,7 @@ The work was done in rounds, each written up as a report that only adds to the p
 
 | Report | Content |
 |---|---|
-| `REPORT.md` (v3, not in the repo yet) | the base answers to Q1–Q4 with the project's 1-D SFT and its own stochastic 2-D dynamo |
+| [`reports/REPORT_v3.md`](reports/REPORT_v3.md) | the base answers to Q0–Q4 with the project's 1-D SFT and its own stochastic 2-D dynamo, ensembles and the exploratory track A–E (`REPORT.md` in the original folder) |
 | [`reports/REPORT_v4_closure.md`](reports/REPORT_v4_closure.md) | closure tests T1–T5 on persistence, and a claim-by-claim ledger of every figure |
 | [`reports/REPORT_v5_additions.md`](reports/REPORT_v5_additions.md) | point-by-point comparison with Bhowmik (2019, A&A 632, A117) |
 | [`reports/REPORT_v7_surya.md`](reports/REPORT_v7_surya.md) | Bhowmik's dynamo (Passos et al. 2014 on SURYA, with pumping) run as a 6-seed ensemble |
@@ -26,7 +26,7 @@ Each result is labelled as in the reports: a *Sun result* comes from data, a *mo
 
 **Q0 — one relation, two forms**
 - Channel 1 needs no separate parity factor when it is written against the *signed* polar sum S = (B_N + B_S)/(|B_N| + |B_S|). Because (−1)^(n+1) = −sgn B_N at every minimum, X̂1 · A_pf = −X1 · S identically, so r(X̂1, A_pf) and −r(X1, S) are the same number (`q0_reconcile.py`). The parity factor is therefore fixed by the observed polarity, not fitted. What still needs a physical explanation is why the sign comes out that way (see the even-cycle switch under Q2).
-- An "r ≈ −0.98, sign reversal" value quoted for channel 1 in an earlier brief has no stored source in the project. `q0_candidates.py` computes every simple candidate relation with its n instead. Do not quote −0.98.
+- The "r ≈ −0.98, sign reversal" value quoted for channel 1 in an earlier brief is this same relation in first differences: r(X1, S) = −0.94 in levels (n = 10, all 10 signs reversed) and −0.98 in first differences (n = 9). It is not a separate or stronger result and should not be quoted as one; channel 1 is quoted once, as +0.93. `q0_candidates.py` lists every simple candidate relation with its n.
 
 **Q1 — what sets A_pf**
 - The parity-signed area imbalance near maximum tracks A_pf: r = +0.93, n = 10, 10/10 signs. Redrawing A_pf within its errors brings this to 0.74 (0.55–0.85). The relation is robust to area noise but fragile to polar-field errors (Sun result).
@@ -39,12 +39,14 @@ Each result is labelled as in the reports: a *Sun result* comes from data, a *mo
 - The magnitude of the polar asymmetry, the area imbalance and the N–S timing lag each track the next cycle (r = +0.62, +0.77, +0.63) (Sun result). The area link is mostly persistence, and the lag link leans on SC19/20.
 
 **Q3 — persistence and flips**
+- Each pole is built by both hemispheres (about 60 % own, 40 % opposite, through cross-equatorial leading flux), and the imbalance |D| is a small residual of large opposing contributions (model result).
 - The area imbalance changes slowly from cycle to cycle: lag-1 r = +0.57 (n = 12), sign runs [2, 7, 4] against 7.0 expected for independent cycles (Sun result).
 - Wherever two consecutive cycles both have a firm sign, the sign is kept (4 of 4 pairs). Every sign change goes through a near-balanced cycle whose own sign a region bootstrap does not fix (SC14: 67 % of draws, SC21: 61 %) (Sun result).
 - The 1-D SFT carries no memory of the imbalance from one cycle to the next, with or without decay (model result). A quasi-periodic slow mode (AR(2), ~6 cycles) is suggested but not established.
 
 **Q4 — stochastic or predetermined, and the dynamo**
 - Hemispheric totals do not predetermine A_pf; the timing and latitude pattern of emergence does (model result).
+- The three headline correlations survive removing the largest regions of each cycle (X̂1 → A_pf stays 0.93 at k = 1), but the 7-cycle northern run and the SC21 southern sign do not: removing the single largest region per cycle breaks the run, and removing the top 10 turns A(21) positive (Sun result).
 - The project's own 2-D dynamo renews the asymmetry every cycle. It matches the Sun's persistence only if the source fluctuations stay coherent for ~30 yr (lag-1 r +0.58 at τ_c = 30 yr). A constant 1–10 % hemispheric bias does not create persistence (model result).
 - **Bhowmik's dynamo on SURYA does carry persistence** at its standard noise: pooled lag-1 r = +0.45 (seed range +0.26 to +0.56), against +0.57 for the Sun (model result). So the lack of persistence was a property of the project's own model, not of flux-transport dynamos in general. Even there, the same-sign runs (4.0–5.5 per 13 cycles) are shorter than the Sun's 7.
 
@@ -83,6 +85,7 @@ Each result is labelled as in the reports: a *Sun result* comes from data, a *mo
 | `ens_transport_series.py` | H1 | per-cycle modelled A_pf for the 27 transport configurations (band in the ensemble figure) |
 | `figs_main.py` | all | plot types P1–P7 and the Q2 table |
 | `figs_q.py` | all | one figure per question (Q0–Q3), the ensemble figure, P6 and the exploratory figures |
+| `q4_figs.py` | Q4 | randomised emergence, the correlations without the largest regions, and the 2-D dynamo figures |
 | `closure_tests.py` | v4 | T1 (timing-lag persistence), T2 (firm pairs), T5 (AR(2) check), T3/T4 summaries |
 | `closure_dynamo.py` | v4 | T3 (forcing coherence time) and T4 (constant hemispheric bias) runs of the 2-D dynamo |
 | `closure_v5.py` | v5 | pure-lag control, parity switch on independent records, bridge to Bhowmik's 0.91, her sensitivities, her link |
@@ -90,7 +93,7 @@ Each result is labelled as in the reports: a *Sun result* comes from data, a *mo
 | `surya_v8.py` | v8 | the earlier dynamo experiments repeated in SURYA (ρ, κ, flow, τ_c, bias) |
 | `sft_bhowmik.py` | v8 | reruns every SFT analysis above with Bhowmik's settings (no decay, her tilt law) by patching the shared core |
 
-Run order (as in `sft_bhowmik.py`, after `v0_checks`), then `q3_persistence`, `q1_sources`, `q2_window`, `q2b_phase_sign`, `q4_stochastic`, `ens_verify`, `ens_extra`, `ens_transport_series`, `explore`, `figs_main`, then the closure, v5, v7 and v8 scripts.
+Run order for v3 is the table at the end of [`reports/REPORT_v3.md`](reports/REPORT_v3.md) (`v0_checks` first; `q2b_phase_sign` needs `explore.json`, so run it after `explore.py`), then the closure, v5, v7 and v8 scripts.
 
 ## What is needed to rerun this
 
@@ -99,7 +102,7 @@ All analysis scripts of the extension are here, including the shared `core.py` a
 - `pipeline/asymcore.py` itself works, but it needs the project's `paper/` tree (`lib_asym`, `common`, `p4lib`, `x_engine`, `bn_sft`, and `sft_asym`, which `core.py` imports directly); see `../pipeline/README.md`;
 - `ftd_core.py` and `ftd_verify.py`, the 2-D transport solver from the separate declining-phase project (`sc24_final/`), which `q4_dynamo.py` imports. Set `FTD_DIR` to its folder;
 - `surya/surya_bhowmik.f` and `surya/surya_bhowmik_ext.f` (see `../dynamo/README.md`);
-- `plots_src/` (the figure and report writers of v4–v8), `REPORT.md` (v3), and the stored outputs under `out/` that later steps read;
+- `plots_src/` (the figure and report writers of v4–v8) and the stored outputs under `out/` that later steps read;
 - data: `../Datasets Used/tilt_complete_analysis.xlsx` (Q1, v5) and the Debrecen DPD file, whose absolute Windows path is written into `q3_persistence.py` (line 95).
 
 The scripts expect to sit in a folder next to the pipeline folder. `core.py` looks for `asymcore.py` in `../master_code/` (the original layout) and `../pipeline/` (this repository). `surya_runs.py` reads `../master_code/init.dat`, which is `dynamo/init.dat` here.

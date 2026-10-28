@@ -1,11 +1,21 @@
 cff-version: 1.2.0
-message: "If you use this code or its results, please cite it as below (and the paper once it is published)."
+message: "If you use this code, cite it as below; for the results, cite the paper (preferred-citation)."
 title: "Hemispheric asymmetry of the Sun: analysis pipeline"
 authors:
   - family-names: Mishra
     given-names: Shivansh
 repository-code: "https://github.com/Shivansh1240/Hemispheric-Asymmtry-of-the-Sun"
 type: software
+preferred-citation:
+  type: article
+  title: "TITLE OF THE MANUSCRIPT"  # fill in, with the given names of Gupta and Karak
+  authors:
+    - family-names: Gupta
+    - family-names: Mishra
+      given-names: Shivansh
+    - family-names: Karak
+  journal: "Research in Astronomy and Astrophysics"
+  status: submitted
 keywords:
   - solar cycle
   - hemispheric asymmetry

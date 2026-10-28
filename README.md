@@ -2,7 +2,7 @@
 
 The two hemispheres of the Sun never produce the same amount of activity. Each solar minimum also ends with one polar field stronger than the other. This project asks how the first sets the second, and whether both carry over into the next cycle. It uses 150 years of sunspot regions (RGO + SOON), a century of polar-field measurements (Mount Wilson faculae, then WSO) and a surface-flux-transport model that is read out exactly the way the data are.
 
-The manuscript is in revision. This repository holds the pipeline that reproduces every number and figure in it, the core library for new work, and the extension that goes after the mechanism: why the channels work, why one hemisphere stays dominant for several cycles, and how far SFT and dynamo models (including SURYA) reproduce it.
+The paper (Gupta, Mishra & Karak, for *Research in Astronomy and Astrophysics*) is in revision. This repository holds the pipeline that reproduces every number and figure in it, the core library for new work, and the extension that goes after the mechanism: why the channels work, why one hemisphere stays dominant for several cycles, and how far SFT and dynamo models (including SURYA) reproduce it.
 
 ---
 
@@ -75,7 +75,7 @@ The full map, with what each paper means for this one, is in [`docs/literature.m
 
 - **Large regions carry channel 1.** r = 0.97 for regions ≥ 1000 MSH, 0.58 for regions < 100 MSH (scan-chosen windows).
 - **A candidate origin for the parity factor.** Even cycles switch their dominant hemisphere after maximum (5 of 7), odd cycles never do (0 of 6). With declining-phase emergence the A_pf sign comes out right in 9 of 10 cycles without any parity factor. Exploratory: the result is window-sensitive.
-- **Persistence and flips.** The area imbalance has a cycle-to-cycle memory (lag-1 r = +0.57, n = 12). Both sign changes (SC14, SC21) go through a near-balanced cycle whose sign a region bootstrap cannot fix.
+- **Persistence and flips.** The area imbalance has a cycle-to-cycle memory (lag-1 r = +0.57, n = 12). Both sign changes (SC14, SC21) go through a near-balanced cycle whose sign a region bootstrap cannot fix. The correlations survive removing the largest regions; the long same-sign run and the SC21 sign do not.
 - **Models.** Both the project's SFT and Bhowmik's reproduce A_pf in odd cycles (r = 0.95–0.97) but not in even ones (≈ 0.01). A 1-D SFT has no inter-cycle memory. The project's own 2-D dynamo needs ~30-yr coherent source fluctuations to match the Sun's persistence. Bhowmik's dynamo on SURYA (Passos et al. 2014 noise plus pumping) gets most of it at standard noise (lag-1 r = +0.45), though its same-sign runs are still shorter than the Sun's.
 - **Against Bhowmik (2019).** Her polar → next-cycle link reproduces in sign, not in size (+0.59 against her 0.73 on her own pairs). The two SFTs disagree on what drives the polar asymmetry: tilt scatter gives 3.7 % here against her 36 %, while flow differences matter far more here than in her model.
 
@@ -137,7 +137,9 @@ The catalogue and polar-field files are not in this repository. All come from pu
 | polar field SC15–19 | Mount Wilson polar faculae with SEMs (`e_PField_MWO_WSO.csv`); the standard calibration of the faculae counts is Muñoz-Jaramillo et al. (2012) |
 | polar field SC20– | Wilcox Solar Observatory polar field ([wso.stanford.edu/Polar.html](http://wso.stanford.edu/Polar.html)) |
 | sunspot number, hemispheric SN | SILSO, Royal Observatory of Belgium ([sidc.be/SILSO](https://www.sidc.be/SILSO/)) |
-| tilt angles | the author's tilt workbook (WS-B and Addendum B only) |
+| tilt angles | the project's tilt workbook (WS-B, Addendum B, extension Q1) |
+| Debrecen sunspot data (extension) | Debrecen Photoheliographic Data (DPD); cite Baranyi (2015) and Győri et al. (2011), as its data policy asks |
+| Temmer hemispheric SN (extension) | Temmer et al. (2006), with SILSO after 1991 |
 
 ## The SURYA dynamo
 
@@ -149,4 +151,4 @@ The catalogue and polar-field files are not in this repository. All come from pu
 
 If you use the pipeline or the results, cite the paper once it is out; until then, use [`CITATION.cff`](CITATION.cff). If you use `dynamo/`, also cite the Surya papers listed in its README.
 
-Author: Shivansh Mishra.
+Paper: Gupta, Mishra & Karak (in revision, RAA). Code and analysis: Shivansh Mishra.
