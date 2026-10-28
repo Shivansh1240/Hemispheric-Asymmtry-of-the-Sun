@@ -4,6 +4,7 @@ The paper (see `pipeline/`) establishes the two channels. This second stage asks
 
 | | Question |
 |---|---|
+| **Q0** | How do the different written forms of channel 1 relate, and which earlier numbers have a stored source? |
 | **Q1** | What sets the polar-field asymmetry at a minimum? |
 | **Q2** | Why that window, where does the parity sign come from, and what carries over to the next cycle? |
 | **Q3** | Why does one hemisphere stay dominant for several cycles, and how does the dominance flip? |
@@ -22,6 +23,10 @@ The work was done in rounds, each written up as a report that only adds to the p
 ## Main findings so far
 
 Each result is labelled as in the reports: a *Sun result* comes from data, a *model result* from a simulation.
+
+**Q0 — one relation, two forms**
+- Channel 1 needs no separate parity factor when it is written against the *signed* polar sum S = (B_N + B_S)/(|B_N| + |B_S|). Because (−1)^(n+1) = −sgn B_N at every minimum, X̂1 · A_pf = −X1 · S identically, so r(X̂1, A_pf) and −r(X1, S) are the same number (`q0_reconcile.py`). The parity factor is therefore fixed by the observed polarity, not fitted. What still needs a physical explanation is why the sign comes out that way (see the even-cycle switch under Q2).
+- An "r ≈ −0.98, sign reversal" value quoted for channel 1 in an earlier brief has no stored source in the project. `q0_candidates.py` computes every simple candidate relation with its n instead. Do not quote −0.98.
 
 **Q1 — what sets A_pf**
 - The parity-signed area imbalance near maximum tracks A_pf: r = +0.93, n = 10, 10/10 signs. Redrawing A_pf within its errors brings this to 0.74 (0.55–0.85). The relation is robust to area noise but fragile to polar-field errors (Sun result).
@@ -56,22 +61,45 @@ Each result is labelled as in the reports: a *Sun result* comes from data, a *mo
 
 ## Files here
 
-| File | Does |
-|---|---|
-| `closure_tests.py` | T1 (timing-lag persistence), T2 (firm pairs, region bootstrap), T5 (AR(2) check), T3/T4 summaries |
-| `closure_dynamo.py` | T3 (forcing coherence time) and T4 (constant hemispheric bias) runs of the 2-D dynamo |
-| `closure_v5.py` | v5: pure-lag control, parity switch on independent records, bridge to Bhowmik's 0.91, her sensitivities, her link |
-| `surya_runs.py` | v7: launches and analyses the SURYA runs of Bhowmik's dynamo (validation, mirror pair, 6-seed ensemble) |
-| `surya_v8.py` | v8: the earlier dynamo experiments repeated in SURYA (ρ, κ, flow, τ_c, bias) |
-| `sft_bhowmik.py` | v8: reruns every SFT analysis with Bhowmik's settings (no decay, her tilt law) by patching the shared core |
+| Script | Question | Does |
+|---|---|---|
+| `core.py` | shared | the layer every script imports: catalogue, A_pf, the bn_sft engine through `pipeline/asymcore.py`, a cap-70 Green's function rescalable in decay time, a readout that keeps every region's contribution to every minimum, and catalogue operations (mirror, symmetrise, rescale, move a region) |
+| `v0_checks.py` | engine | checks before any number is quoted: the cap-70 Green's function reproduces ensemble member 0; decay-time rescaling equals a direct build; mirror checks (N ↔ S) of model and data, also with hemispheric transport |
+| `q0_reconcile.py` | Q0 | channel 1 in its parity-signed and signed-field (S) forms, first differences, and the magnitude/sign pieces that link it to the next cycle |
+| `q0_candidates.py` | Q0 | every simple candidate relation (signed/unsigned, odd/even subsets) against A_pf, S and A(n+1), with n |
+| `q1_sources.py` | Q1 | from a symmetrised catalogue (identical hemispheres, A_pf = 0), switches on one difference at a time: area, amount only, placement only, tilt scatter, transport, all; plus X̂1 × T_lin and an algebraic hemispheric dipole |
+| `q2_window.py` | Q2 | exact per-region attribution of the modelled polar imbalance, the "physics window" chosen by the model alone, the full data scan, size × latitude table, the effective sign and next-cycle sign rules |
+| `q2b_phase_sign.py` | Q2 | the parity sign modelled explicitly: X1 at maximum vs in the declining-phase window t_R+3 → +4 (chosen from the model only), the even/odd switch, A_pf against the unsigned decline-phase X1, neighbouring-window sensitivity |
+| `q3_persistence.py` | Q3 | run lengths, n vs n+2 seeding, the flip cycles with and without low-latitude large regions, the SC21 flip on DPD and Temmer et al. (2006) records, model memory vs decay time |
+| `q4_stochastic.py` | Q4 | randomised emergence in the SFT (sizes re-dealt within a hemisphere; time/latitude slots re-dealt between hemispheres; tilt only), and the key correlations without the k largest regions |
+| `q4_dynamo.py` | Q4 | the 2-D Babcock–Leighton flux-transport dynamo on the full sphere, with stochastic forcing per hemisphere (σ, τ_c, ρ) and a cross-equatorial coupling knob κ; transport operator imported read-only from `ftd_core.py` |
+| `q4_dynamo_analyse.py` | Q4 | per-cycle statistics of a dynamo run, defined exactly as for the Sun (A, A_pf, S, X at maximum and in the decline) |
+| `q4_dynamo_checks.py` | Q4 | symmetry without noise, exact mirror with swapped forcing, and resolution (97 × 181 vs 65 × 121) |
+| `q4_dynamo_ensemble.py` | Q4 | the dynamo table over seeds, with pooled r over all adjacent cycle pairs |
+| `q4_ftd_verify.py` | Q4 | runs the transport solver's own eight verification checks, unchanged |
+| `explore.py` | A–E | exploratory: move the largest low-latitude region to 35°, a Green's-function predictor X_G, the fewest regions that make up each cycle's imbalance, an AR(2) memory model, N–S timing |
+| `ens_verify.py` | H1–H3 | 100-member emergence ensemble (area noise, A_pf within 1σ, tilt scatter) and 27 transport configurations for the three headline results |
+| `ens_extra.py` | H1, Q3 | splits the H1 spread into area and A_pf parts; region bootstrap of the flip-cycle asymmetries |
+| `ens_transport_series.py` | H1 | per-cycle modelled A_pf for the 27 transport configurations (band in the ensemble figure) |
+| `figs_main.py` | all | plot types P1–P7 and the Q2 table |
+| `figs_q.py` | all | one figure per question (Q0–Q3), the ensemble figure, P6 and the exploratory figures |
+| `closure_tests.py` | v4 | T1 (timing-lag persistence), T2 (firm pairs), T5 (AR(2) check), T3/T4 summaries |
+| `closure_dynamo.py` | v4 | T3 (forcing coherence time) and T4 (constant hemispheric bias) runs of the 2-D dynamo |
+| `closure_v5.py` | v5 | pure-lag control, parity switch on independent records, bridge to Bhowmik's 0.91, her sensitivities, her link |
+| `surya_runs.py` | v7 | SURYA runs of Bhowmik's dynamo: validation, mirror pair, 6-seed ensemble |
+| `surya_v8.py` | v8 | the earlier dynamo experiments repeated in SURYA (ρ, κ, flow, τ_c, bias) |
+| `sft_bhowmik.py` | v8 | reruns every SFT analysis above with Bhowmik's settings (no decay, her tilt law) by patching the shared core |
+
+Run order (as in `sft_bhowmik.py`, after `v0_checks`), then `q3_persistence`, `q1_sources`, `q2_window`, `q2b_phase_sign`, `q4_stochastic`, `ens_verify`, `ens_extra`, `ens_transport_series`, `explore`, `figs_main`, then the closure, v5, v7 and v8 scripts.
 
 ## What is needed to rerun this
 
-These scripts import modules and read outputs that are **not in the repository yet**:
+All analysis scripts of the extension are here, including the shared `core.py` and the 2-D dynamo. What is still **not in the repository**:
 
-- `core.py` (catalogue, 1-D SFT model, mirror/symmetrised catalogues), `q4_dynamo.py`, `q4_dynamo_analyse.py`;
-- the analysis scripts that `sft_bhowmik.py` reruns: `q1_sources`, `q2_window`, `q2b_phase_sign`, `q3_persistence`, `q4_stochastic`, `ens_verify`, `ens_extra`, `ens_transport_series`, `explore`, `figs_main`, `v0_checks`, `plots_src/`;
+- `pipeline/asymcore.py` itself works, but it needs the project's `paper/` tree (`lib_asym`, `common`, `p4lib`, `x_engine`, `bn_sft`, and `sft_asym`, which `core.py` imports directly); see `../pipeline/README.md`;
+- `ftd_core.py` and `ftd_verify.py`, the 2-D transport solver from the separate declining-phase project (`sc24_final/`), which `q4_dynamo.py` imports. Set `FTD_DIR` to its folder;
 - `surya/surya_bhowmik.f` and `surya/surya_bhowmik_ext.f` (see `../dynamo/README.md`);
-- `REPORT.md` (v3) and the stored outputs under `out/` that later steps read.
+- `plots_src/` (the figure and report writers of v4–v8), `REPORT.md` (v3), and the stored outputs under `out/` that later steps read;
+- data: `../Datasets Used/tilt_complete_analysis.xlsx` (Q1, v5) and the Debrecen DPD file, whose absolute Windows path is written into `q3_persistence.py` (line 95).
 
-The scripts expect to sit in a folder next to the pipeline folder; `surya_runs.py` reads `../master_code/init.dat`, which is `dynamo/init.dat` here.
+The scripts expect to sit in a folder next to the pipeline folder. `core.py` looks for `asymcore.py` in `../master_code/` (the original layout) and `../pipeline/` (this repository). `surya_runs.py` reads `../master_code/init.dat`, which is `dynamo/init.dat` here.

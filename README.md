@@ -36,7 +36,7 @@ The nested numbers are the honest ones. The in-sample r values are maxima of a w
 | A^n | whole-cycle (minimum to minimum) area asymmetry (N − S)/(N + S) |
 | size class | set by each region's **peak** area, which needs the unique region ids of the corrected catalogue |
 
-Rows at latitude 0 are dropped. The parity factor is an empirical regularity: it equals −sgn B_N at every minimum in the record. It is **not** presented as a Hale-law correction.
+Rows at latitude 0 are dropped. The parity factor is an empirical regularity: it equals −sgn B_N at every minimum in the record, so X̂1 · A_pf = −X1 · S, with S = (B_N + B_S)/(|B_N| + |B_S|) the signed polar sum. It is **not** presented as a Hale-law correction.
 
 ## How the results were checked
 
@@ -84,12 +84,12 @@ Details, with the Sun/model label on every claim, are in [`extension/README.md`]
 ## Limitations
 
 - **Small samples.** Channel 1 rests on 10 cycles, channel 2 on 12. One unusual cycle can move r by a lot; the drop-one and Spearman controls (`p4.controls`) are there for this reason.
-- **The parity factor is not yet explained.** Channel 1 only works after multiplying by (−1)^(n+1). The even-cycle switch (see the extension) is a candidate explanation, but it is exploratory.
+- **The parity factor is fixed but not yet explained.** It is not a fitted ingredient: written against the signed polar sum S = (B_N + B_S)/(|B_N| + |B_S|), channel 1 is the same relation with no factor at all (X̂1 · A_pf = −X1 · S identically). What lacks a physical explanation is why more emergence in one hemisphere goes with a *weaker* pole there in even cycles. The even-cycle switch (see the extension) is a candidate, but it is exploratory.
 - **The window is empirical.** The channel-1 window is the top of a broad plateau in a scan. The window the SFT says should build the polar imbalance (t_R + 2.3 to + 5.1 yr) ranks only 74th and 51st of 104 in the two channels' scans.
 - **Models fail in even cycles.** Every SFT run reproduces A_pf in odd cycles only, which limits every model statement.
 - **Two instruments.** A_pf switches from calibrated faculae counts to WSO magnetograms at SC20. The splice is tested, but it is a seam in the middle of a 10-point series.
 - **Cycle 14 is a weak pass.** It passes on the pre-registered ±1σ rule, but the point value is outside the 95% prediction interval.
-- **Incomplete code.** The analysis scripts under `paper/`, the extension's shared modules (`core.py`, `q4_dynamo*.py`, …) and the two extended SURYA copies are not in this repository yet. Until they are, the repository documents the work but cannot rerun it.
+- **Incomplete code.** The paper's analysis scripts under `paper/`, the 2-D transport solver `ftd_core.py` (from a separate project) and the two extended SURYA copies are not in this repository yet. Until they are, the repository documents the work but cannot rerun it.
 
 ## Repository layout
 
@@ -103,7 +103,7 @@ dynamo/
     init.dat         relaxed dipolar starting state, 257 x 257 grid
     run.sh, Makefile, plot_run.py
 extension/
-    *.py             closure tests, the Bhowmik (2019) comparison, the SURYA ensembles (v4-v8)
+    *.py             Q0-Q3 analyses, ensembles, closure tests, the Bhowmik (2019) comparison, SURYA runs
     reports/         the generated reports v4, v5, v7, v8
 docs/
     literature.md    earlier work and where this project sits
